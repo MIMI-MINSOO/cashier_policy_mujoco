@@ -60,6 +60,4 @@ python -m flare.scripts.eval_sim --checkpoint <경로>/training_state.pt --polic
 
 ## 참고
 
-- 관절 한계(joint1 ±90°, joint2 0~150°)는 URDF/MJCF 모두에 반영되어 있음 — 실물 안전한계와
-  다를 수 있으니(특히 joint4~6) 실물에 적용 전 재확인할 것.
 - 상품은 spam 1개만 활성화되어 있음(MJCF에 나머지 4개는 주석 처리, 완전 삭제 아님).
