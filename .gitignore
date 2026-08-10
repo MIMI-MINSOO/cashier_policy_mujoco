@@ -1,0 +1,63 @@
+# ─── Python ─────────────────────────────────────────────
+__pycache__/
+.Python
+
+# ─── Packaging / build ──────────────────────────────────
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+*.egg
+.installed.cfg
+MANIFEST
+
+# ─── Virtual environments ───────────────────────────────
+.venv
+
+# ─── Data & outputs ─────────────────────────────────────
+data/
+outputs/
+flare_outputs/
+visualizations/*
+robomimic/
+ref_*/
+transport.pth
+
+# ─── Logs & checkpoints ─────────────────────────────────
+log/
+logs/
+checkpoints/
+
+# ─── Experiment tracking ────────────────────────────────
+wandb/
+
+# ─── Editor / OS / misc ─────────────────────────────────
+.vscode/
+.DS_Store
+.nfs*
+tmp*
+test.ipynb
+
+# ─── Harness Framework (local-only, never commit) ───────
+.claude/
+docs/
+experiments/
+phases/
+references/
+scripts/
+# but track the package's entry scripts (lerobot-style src/flare/scripts/)
+!src/flare/scripts/
+!src/flare/scripts/*.py
+src/flare/scripts/__pycache__/
+CLAUDE.md

@@ -1,0 +1,39 @@
+# @package _global_
+# MuJoCo 심 바코드 스캔 task — 양팔 14 + 목 2 = 16차원.
+# 데이터: record(bi_piper_mujoco, 30fps) -> convert(--target-fps 10) -> zarr.
+# 카메라 전략은 실물과 동일: head(목 Femto Bolt) 우선 학습, top은 기록만(예비).
+
+resize_shape: [240, 320]
+crop_shape: [224, 308]
+
+task:
+  name: sim_barcode_scan
+  robot: piper_mujoco
+  robot_mode: dual
+  dataset_repo_id: minsoo/sim_barcode_scan
+  dataset_root: ${oc.env:FLARE_DATASETS_DIR,data}/sim_barcode_scan
+  dataset_episodes: null
+  override_stats:
+    observation.images.head:
+      mean: [[[0.485]], [[0.456]], [[0.406]]]
+      std: [[[0.229]], [[0.224]], [[0.225]]]
+    observation.images.left_wrist:
+      mean: [[[0.485]], [[0.456]], [[0.406]]]
+      std: [[[0.229]], [[0.224]], [[0.225]]]
+    observation.images.right_wrist:
+      mean: [[[0.485]], [[0.456]], [[0.406]]]
+      std: [[[0.229]], [[0.224]], [[0.225]]]
+
+  env_package: null
+  env_name: null
+  env_kwargs: null
+
+  fps: 10
+  image_keys:
+    - observation.images.head
+    - observation.images.left_wrist
+    - observation.images.right_wrist
+  state_key: observation.state
+  action_key: action
+  state_dim: 16
+  action_dim: 16

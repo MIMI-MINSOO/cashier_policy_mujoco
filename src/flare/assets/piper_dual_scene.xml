@@ -1,0 +1,33 @@
+<mujoco model="piper_dual_scene">
+  <include file="piper_dual.xml"/>
+
+  <statistic center="0 0 0.1" extent="0.4"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-20"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+      markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+
+    <!-- TODO(테이블): 실물 테이블 실측값(크기/높이/위치)이 정리되면 여기에 추가.
+         예상 형태: <body name="table" pos="..."> + box geom. 임의 수치 금지. -->
+
+    <!-- TODO(물체): 조작 대상 물체들은 실물 셋업 확정 후 여기에 추가. 임의 수치 금지. -->
+
+    <!-- TODO(카메라): 실물 카메라 배치(left_main / left_wrist / right_wrist,
+         piper_real_env.py의 dual 카메라 이름 규약)에 맞춰 <camera> 추가.
+         wrist 카메라는 이 파일이 아니라 piper_dual.xml의 해당 링크 body 안에
+         넣어야 할 수도 있음 — 장착 위치 실측값 확인 후 결정. 임의 수치 금지. -->
+  </worldbody>
+</mujoco>
