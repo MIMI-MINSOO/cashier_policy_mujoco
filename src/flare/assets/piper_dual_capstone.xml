@@ -1,0 +1,624 @@
+<mujoco model="piper_dual_capstone">
+  <!-- capstone 프레임(베이스/아크릴/목 2-DOF/헤드) + Agilex Piper 양팔(piper_dual.xml 원문 이식).
+       프레임·목·팔 장착 xy 좌표는 capstone_mujoco/urdf_v8_mujoco.xml의 실측 CAD 값.
+       팔 base 높이: capstone 1번 조인트 z=0.826에서 Piper joint1 오프셋 0.123을 빼서 z=0.703.
+       ⚠️ 팔 base의 yaw(장착 방향)는 실물 미확인 — 아래 left/right_base_link quat 수정 필요 시 교체. -->
+  <compiler angle="radian" meshdir="assets"/>
+
+  <!-- 조명: 그림자 off 유지하되, 주변광을 낮추고 방향광 비중을 높여 면 음영(경계감) 확보 -->
+  <visual>
+    <headlight diffuse="0.4 0.4 0.4" ambient="0.18 0.18 0.18" specular="0.15 0.15 0.15"/>
+  </visual>
+
+  <!-- noslip: 파지 중 접촉면이 서서히 미끄러지는 수치 드리프트 억제 -->
+  <option integrator="implicitfast" cone="elliptic" impratio="100" noslip_iterations="10"/>
+
+  <default>
+    <default class="piper">
+      <joint frictionloss="0.3" armature="0.005"/>
+      <position inheritrange="1" forcerange="-100 100"/>
+      <default class="finger">
+        <joint frictionloss="0" type="slide"/>
+        <position forcerange="-10 10"/>
+      </default>
+      <default class="visual">
+        <geom group="2" type="mesh" contype="0" conaffinity="0" density="0"/>
+      </default>
+      <default class="collision">
+        <geom group="3" type="capsule"/>
+      </default>
+    </default>
+  </default>
+
+  <asset>
+    <material name="gray_mat" rgba="0.59 0.59 0.59 1"/>
+    <material name="light_gray_mat" rgba="0.98 0.98 0.98 1"/>
+    <material name="light_medium_gray_mat" rgba="0.85 0.85 0.85 1"/>
+    <material name="dark_gray_mat" rgba="0.086 0.086 0.086 1"/>
+    <material name="darker_gray_mat" rgba="0.14 0.14 0.14 1"/>
+    <material name="white_mat" rgba="1 1 1 1"/>
+    <material name="red_mat" rgba="0.82 0.15 0.15 1"/>
+    <material name="black_mat" rgba="0 0 0 1"/>
+    <material name="light_blue" rgba="0.79 0.82 0.93 1"/>
+
+    <mesh file="link2_0.obj"/>
+    <mesh file="link2_1.obj"/>
+    <mesh file="link2_2.obj"/>
+    <mesh file="link2_3.obj"/>
+    <mesh file="link2_4.obj"/>
+    <mesh file="link2_5.obj"/>
+    <mesh file="link2_6.obj"/>
+    <mesh file="link2_7.obj"/>
+    <mesh file="link2_8.obj"/>
+    <mesh file="link2_9.obj"/>
+    <mesh file="link2_10.obj"/>
+    <mesh file="link2_11.obj"/>
+    <mesh file="link2_12.obj"/>
+    <mesh file="link2_13.obj"/>
+    <mesh file="link2_14.obj"/>
+    <mesh file="link2_15.obj"/>
+    <mesh file="link2_16.obj"/>
+    <mesh file="link2_17.obj"/>
+    <mesh file="link2_18.obj"/>
+    <mesh file="link2_19.obj"/>
+    <mesh file="link2_20.obj"/>
+    <mesh file="link2_21.obj"/>
+    <mesh file="link2_22.obj"/>
+    <mesh file="link2_23.obj"/>
+    <mesh file="link2_24.obj"/>
+    <mesh file="link2_25.obj"/>
+    <mesh file="link2_26.obj"/>
+    <mesh file="link2_27.obj"/>
+    <mesh file="link2_28.obj"/>
+    <mesh file="link2_29.obj"/>
+    <mesh file="link2_30.obj"/>
+    <mesh file="link2_31.obj"/>
+    <mesh file="link3_0.obj"/>
+    <mesh file="link3_1.obj"/>
+    <mesh file="link3_2.obj"/>
+    <mesh file="link3_3.obj"/>
+    <mesh file="link3_4.obj"/>
+    <mesh file="link3_5.obj"/>
+    <mesh file="link3_7.obj"/>
+    <mesh file="link3_8.obj"/>
+    <mesh file="link3_9.obj"/>
+    <mesh file="link3_10.obj"/>
+    <mesh file="link3_11.obj"/>
+    <mesh file="link3_12.obj"/>
+    <mesh file="link3_13.obj"/>
+    <mesh file="link3_14.obj"/>
+    <mesh file="link3_15.obj"/>
+    <mesh file="link3_16.obj"/>
+    <mesh file="link3_17.obj"/>
+    <mesh file="link3_18.obj"/>
+    <mesh file="link3_19.obj"/>
+    <mesh file="link3_20.obj"/>
+    <mesh file="link3_21.obj"/>
+    <mesh file="link3_22.obj"/>
+    <mesh file="link3_23.obj"/>
+    <mesh file="link3_24.obj"/>
+    <mesh file="link3_25.obj"/>
+    <mesh file="link3_26.obj"/>
+    <mesh file="link3_27.obj"/>
+    <mesh file="link3_28.obj"/>
+    <mesh file="link4_2.obj"/>
+    <mesh file="link4_3.obj"/>
+    <mesh file="link4_4.obj"/>
+    <mesh file="link4_5.obj"/>
+    <mesh file="link4_6.obj"/>
+    <mesh file="link5_2.obj"/>
+    <mesh file="link5_3.obj"/>
+    <mesh file="link5_4.obj"/>
+    <mesh file="link5_5.obj"/>
+    <mesh file="link5_6.obj"/>
+    <mesh file="link5_7.obj"/>
+    <mesh file="link5_8.obj"/>
+    <mesh name="base_link" file="base_link.stl"/>
+    <mesh name="link1" file="link1.stl"/>
+    <mesh name="link2" file="link2.stl"/>
+    <mesh name="link2_gray" file="link2_gray.stl"/>
+    <mesh name="link3" file="link3.stl"/>
+    <mesh name="link4" file="link4.stl"/>
+    <mesh name="link5" file="link5.stl"/>
+    <mesh file="link6.stl"/>
+    <mesh file="link7.stl"/>
+    <mesh file="link8.stl"/>
+
+    <!-- capstone 프레임 mesh (원본: capstone_mujoco/meshes/*.STL, 이름 충돌 방지용 capstone_ 접두어) -->
+    <mesh name="capstone_base_link" file="capstone_base_link.STL"/>
+    <mesh name="capstone_acryl_link" file="capstone_acryl_link.STL"/>
+    <mesh name="capstone_h1_link" file="capstone_h1_link.STL"/>
+    <mesh name="capstone_h2_Link" file="capstone_h2_Link.STL"/>
+    <mesh name="capstone_top_Link" file="capstone_top_Link.STL"/>
+    <!-- capstone 커스텀 그리퍼 손가락 (외형 전용 — 물리는 piper 손가락 그대로) -->
+    <mesh name="capstone_lge1_link" file="capstone_lge1_link.STL"/>
+    <mesh name="capstone_lge2_Link" file="capstone_lge2_Link.STL"/>
+    <mesh name="capstone_rge1_link" file="capstone_rge1_link.STL"/>
+    <mesh name="capstone_rge2_link" file="capstone_rge2_link.STL"/>
+    <!-- 아크릴판: 실물은 베이지색 불투명 시트지 부착 (바코드 스캐너 구멍 부분 제외) -->
+    <material name="acryl_mat" rgba="0.87 0.82 0.72 1"/>
+    <material name="head_blue_mat" rgba="0.86666667 0.90980392 1 1"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+      markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+
+    <!-- 장바구니(청록) + 상품 바코드 텍스처 (실제 EAN-13 번호로 생성, assets/barcode_*.png) -->
+    <material name="basket_mat" rgba="0.0 0.55 0.5 1"/>
+    <texture type="2d" name="tex_barcode_acafela" file="assets/barcode_acafela.png"/>
+    <material name="barcode_acafela_mat" texture="tex_barcode_acafela"/>
+    <texture type="2d" name="tex_barcode_hotsix" file="assets/barcode_hotsix.png"/>
+    <material name="barcode_hotsix_mat" texture="tex_barcode_hotsix"/>
+    <texture type="2d" name="tex_barcode_dalbam" file="assets/barcode_dalbam.png"/>
+    <material name="barcode_dalbam_mat" texture="tex_barcode_dalbam"/>
+    <texture type="2d" name="tex_barcode_spam" file="assets/barcode_spam.png"/>
+    <material name="barcode_spam_mat" texture="tex_barcode_spam"/>
+    <texture type="2d" name="tex_barcode_flavono" file="assets/barcode_flavono.png"/>
+    <material name="barcode_flavono_mat" texture="tex_barcode_flavono"/>
+    <!-- RealSense D405 외형 mesh (Intel realsense-ros/realsense2_description, Apache-2.0, 단위 mm) -->
+    <mesh name="d405" file="d405.stl" scale="0.001 0.001 0.001"/>
+    <!-- 그리퍼 손가락: 검은색 (사용자 요청) — 순흑 대신 음영이 살아있는 근흑 -->
+    <material name="gripper_black_mat" rgba="0.07 0.07 0.075 1" specular="0.4" shininess="0.4"/>
+  </asset>
+
+  <worldbody>
+    <light name="spotlight_left"  mode="targetbodycom" target="left_link8"  pos="-0.06 0.152 2" castshadow="false"/>
+    <light name="spotlight_right" mode="targetbodycom" target="right_link8" pos="-0.06 0.638 2" castshadow="false"/>
+    <light name="worklight" pos="-0.35 0.39 2" dir="0 0 -1" directional="true" diffuse="0.28 0.28 0.28" castshadow="false"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+
+    <!-- ===== capstone 프레임 (urdf_v8_mujoco.xml 실측값 그대로, visual 전용) ===== -->
+    <body name="base_link" pos="0 0 0">
+      <inertial pos="-0.30076808 0.3901163 0.53460902" mass="12.662677" fullinertia="0.34221346 0.23707595 0.35796367 -1.8095931e-07 -1.5824002e-05 -1.8939502e-08"/>
+      <geom name="base_link_visual_0" type="mesh" mesh="capstone_base_link" contype="0" conaffinity="0" group="2" density="0" material="light_blue"/>
+      <!-- 아크릴 작업면 충돌판 2단 (acryl mesh 면 분석으로 유도, 2026-07-08):
+           메인 상면 z=0.755 x[-0.63,-0.20] y[0.12,0.99] / 왼팔 옆 낮은 선반 상면 z=0.540 x[-0.47,-0.24] y[-0.21,-0.10] -->
+      <geom name="acryl_worktop"       type="box" size="0.215 0.435 0.0075" pos="-0.415 0.555 0.7475" group="3" rgba="0.87 0.82 0.72 0.3"/>
+      <geom name="acryl_worktop_low"   type="box" size="0.115 0.055 0.0075" pos="-0.355 -0.155 0.5325" group="3" rgba="0.87 0.82 0.72 0.3"/>
+      <!-- ⚠️ 바코드 스캐너 구멍: 임시 위치/크기 (작업면 중간쯤, 양팔 사이 — 사용자 승인 placeholder).
+           실측(위치/크기) 받으면 아래 3개 요소의 pos/size 수정 -->
+      <site name="barcode_scanner" pos="-0.42 0.40 0.755" size="0.005" rgba="1 0 0 0"/>
+      <geom name="scanner_window" type="box" size="0.05 0.05 0.0003" pos="-0.42 0.40 0.7556" rgba="0.08 0.08 0.1 1" contype="0" conaffinity="0" group="2"/>
+      <!-- 표시등은 group 5: 관측 카메라 렌더(get_obs, group 0~2만 표시)에는 안 찍히고
+           teleop 뷰어에서만 group 5를 켜서 사람에게만 보임 (학습 데이터 오염 방지) -->
+      <geom name="scanner_indicator" type="box" size="0.012 0.05 0.003" pos="-0.478 0.40 0.7586" rgba="0.35 0.35 0.35 1" contype="0" conaffinity="0" group="5"/>
+      <body name="acryl_link" pos="-0.34284404 0.53960397 0.755" quat="0 0.70710678 -0.70710678 0">
+        <inertial pos="0.150505 0.040319637 0.059828346" mass="13.56478" fullinertia="0.48820177 0.40902989 0.89672297 -2.0480016e-06 0 0"/>
+        <geom name="acryl_link_visual_0" type="mesh" mesh="capstone_acryl_link" contype="0" conaffinity="0" group="2" density="0" material="acryl_mat"/>
+        <!-- TODO(바코드 구멍): 스캐너 구멍 위치/크기 실측값 확보 후 시각/기능 반영 -->
+      </body>
+
+      <!-- ===== 목 (2-DOF, Dynamixel) — 축/단위 규약 및 실물 제어 코드 확인 전까지 기본 위치 서보만 ===== -->
+      <body name="h1_link" pos="-0.1706 0.38945 1.3378">
+        <joint name="h1_joint" type="hinge" axis="0 0 1" range="-1.5708 1.5708" damping="0.05"/>
+        <inertial pos="0.011532239 2.4300655e-05 0.017931616" mass="0.0565863" fullinertia="1.1083382e-05 1.5946691e-05 1.7803633e-05 -1.8273829e-07 -1.5030648e-06 -3.0230378e-12"/>
+        <geom name="h1_link_visual_0" type="mesh" mesh="capstone_h1_link" contype="0" conaffinity="0" group="2" density="0" material="acryl_mat"/>
+        <body name="h2_Link" pos="-0.0036 -0.020175 0.020225" quat="0.70710548 0 0.70710808 0">
+          <joint name="h2_joint" type="hinge" axis="0 -1 0" range="-1.5708 1.5708" damping="0.05"/>
+          <inertial pos="0.0064050348 0.018420222 -0.049944011" mass="0.28261594" fullinertia="0.0003267904 6.2196972e-05 0.00031797912 2.6142933e-08 1.6117971e-07 -1.4719549e-08"/>
+          <geom name="h2_Link_visual_0" type="mesh" mesh="capstone_h2_Link" contype="0" conaffinity="0" group="2" density="0" material="light_blue"/>
+          <!-- 헤드 카메라: Orbbec Femto Bolt (사용자 확정). RGB FOV 스펙 = 16:9 80°x51°, 4:3 65°x51°
+               → fovy 51°. 방향: 전방(-x) 아래 70° (사용자 확정, 2026-07-08) -->
+          <camera name="head_cam" pos="0.0846 0 -0.0308" quat="0.579227 -0.405581 -0.405581 0.579227" fovy="51"/>
+        </body>
+      </body>
+      <body name="top_Link" pos="-0.34381 0.38992 1.44" quat="-2.5973435e-06 -0.70710548 0.70710808 2.597353e-06">
+        <inertial pos="1.1265778e-05 -0.00013610823 0.011555979" mass="0.10791043" fullinertia="7.7100213e-06 7.0256738e-05 7.1255027e-05 2.4906533e-10 -1.7847472e-08 4.92978e-08"/>
+        <geom name="top_Link_visual_0" type="mesh" mesh="capstone_top_Link" contype="0" conaffinity="0" group="2" density="0" material="head_blue_mat"/>
+        <!-- 탑 카메라: RealSense D435 (sub용 — 목 카메라 학습 실패 시 대체용, 사용자 설명 2026-07-08).
+             수직 하방 뷰, 이미지 상단 = 전방(-x). RGB FOV 스펙 69.4°x42.5° → fovy 42.5.
+             렌즈는 플레이트 3cm 아래 (mesh 간섭 회피) — 실물 장착 오프셋 확인되면 조정 -->
+        <camera name="top_cam" pos="0 0 0.03" quat="0 0 1 0" fovy="42.5"/>
+      </body>
+    </body>
+
+    <!-- ===== 왼팔 (piper_dual.xml 원문, 장착 pos/quat만 교체) ===== -->
+    <!-- yaw 180°: joint1 zero 방향 반대로 (사용자 확인, 2026-07-07) -->
+    <body name="left_base_link" childclass="piper" gravcomp="1" pos="-0.06 0.152 0.703" quat="0 0 0 1">
+      <inertial pos="-0.00979275 1.82906e-06 0.04101" quat="0.692988 -0.137524 -0.137826 0.69416" mass="0.162549"
+        diaginertia="0.000269445 0.000227478 0.000221437"/>
+      <geom class="visual" density="0" mesh="base_link" material="gray_mat"/>
+      <geom class="collision" mesh="base_link"/>
+      <body name="left_link1" pos="0 0 0.123" quat="0.707105 0 0 -0.707108" gravcomp="1">
+        <inertial pos="0.00131676 0.000310289 -0.00922875" quat="0.557105 0.432155 0.377373 0.600388" mass="0.097868"
+          diaginertia="9.25942e-05 8.3083e-05 7.69469e-05"/>
+        <!-- 2026-08-10 사용자 지시: 허리(joint1) ±90도로 제한 -->
+        <joint name="left_joint1" axis="0 0 1" range="-1.5708 1.5708"/>
+        <geom class="visual" density="0" mesh="link1" material="gray_mat"/>
+        <geom class="collision" mesh="link1"/>
+        <body name="left_link2" quat="0.499998 0.5 -0.500002 -0.5" gravcomp="1">
+          <inertial pos="0.148794 -0.00242027 0.00175155" quat="-0.0249063 0.70684 0.00803509 0.706889" mass="0.290889"
+            diaginertia="0.00177549 0.00173142 0.00014552"/>
+          <!-- 2026-08-10 사용자 지시: 어깨(joint2) 상한 150도로 제한 -->
+          <joint name="left_joint2" axis="0 0 1" range="0 2.61799"/>
+          <geom mesh="link2_0" material="gray_mat" class="visual"/>
+          <geom mesh="link2_1" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_2" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_3" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_4" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_5" material="red_mat" class="visual"/>
+          <geom mesh="link2_6" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_7" material="gray_mat" class="visual"/>
+          <geom mesh="link2_8" material="red_mat" class="visual"/>
+          <geom mesh="link2_9" material="red_mat" class="visual"/>
+          <geom mesh="link2_10" material="gray_mat" class="visual"/>
+          <geom mesh="link2_11" material="red_mat" class="visual"/>
+          <geom mesh="link2_12" material="red_mat" class="visual"/>
+          <geom mesh="link2_13" material="red_mat" class="visual"/>
+          <geom mesh="link2_14" material="red_mat" class="visual"/>
+          <geom mesh="link2_15" material="red_mat" class="visual"/>
+          <geom mesh="link2_16" material="red_mat" class="visual"/>
+          <geom mesh="link2_17" material="red_mat" class="visual"/>
+          <geom mesh="link2_18" material="red_mat" class="visual"/>
+          <geom mesh="link2_19" material="red_mat" class="visual"/>
+          <geom mesh="link2_20" material="red_mat" class="visual"/>
+          <geom mesh="link2_21" material="gray_mat" class="visual"/>
+          <geom mesh="link2_22" material="red_mat" class="visual"/>
+          <geom mesh="link2_23" material="red_mat" class="visual"/>
+          <geom mesh="link2_24" material="red_mat" class="visual"/>
+          <geom mesh="link2_25" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_26" material="red_mat" class="visual"/>
+          <geom mesh="link2_27" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_28" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_29" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_30" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_31" material="light_medium_gray_mat" class="visual"/>
+          <geom mesh="link2" class="collision"/>
+          <body name="left_link3" pos="0.28358 0.028726 0" quat="0.998726 0 0 0.0504536" gravcomp="1">
+            <inertial pos="-0.0996835 0.0349477 0.000508026" quat="0.0777021 0.702287 -0.0990541 0.700674"
+              mass="0.290848" diaginertia="0.000241946 0.000222224 0.000100384"/>
+            <joint name="left_joint3" pos="0 0 0" axis="0 0 1" range="-2.697 0"/>
+            <geom mesh="link3_0" material="darker_gray_mat" class="visual"/>
+            <geom mesh="link3_1" material="red_mat" class="visual"/>
+            <geom mesh="link3_2" material="gray_mat" class="visual"/>
+            <geom mesh="link3_3" material="gray_mat" class="visual"/>
+            <geom mesh="link3_4" material="gray_mat" class="visual"/>
+            <geom mesh="link3_5" material="gray_mat" class="visual"/>
+            <geom mesh="link3_7" material="darker_gray_mat" class="visual"/>
+            <geom mesh="link3_8" material="white_mat" class="visual"/>
+            <geom mesh="link3_9" material="red_mat" class="visual"/>
+            <geom mesh="link3_10" material="white_mat" class="visual"/>
+            <geom mesh="link3_11" material="white_mat" class="visual"/>
+            <geom mesh="link3_12" material="white_mat" class="visual"/>
+            <geom mesh="link3_13" material="white_mat" class="visual"/>
+            <geom mesh="link3_14" material="gray_mat" class="visual"/>
+            <geom mesh="link3_15" material="gray_mat" class="visual"/>
+            <geom mesh="link3_16" material="gray_mat" class="visual"/>
+            <geom mesh="link3_17" material="gray_mat" class="visual"/>
+            <geom mesh="link3_18" material="gray_mat" class="visual"/>
+            <geom mesh="link3_19" material="gray_mat" class="visual"/>
+            <geom mesh="link3_20" material="gray_mat" class="visual"/>
+            <geom mesh="link3_21" material="gray_mat" class="visual"/>
+            <geom mesh="link3_22" material="gray_mat" class="visual"/>
+            <geom mesh="link3_23" material="gray_mat" class="visual"/>
+            <geom mesh="link3_24" material="gray_mat" class="visual"/>
+            <geom mesh="link3_25" material="gray_mat" class="visual"/>
+            <geom mesh="link3_26" material="gray_mat" class="visual"/>
+            <geom mesh="link3_27" material="gray_mat" class="visual"/>
+            <geom mesh="link3_28" material="gray_mat" class="visual"/>
+            <geom mesh="link3" class="collision"/>
+            <body name="left_link4" pos="-0.24221 0.068514 0" quat="0.544767 -0.544769 -0.450809 0.450808" gravcomp="1">
+              <inertial pos="0.000276465 -0.00102804 -0.00472831" quat="0.492305 0.505285 0.503294 0.499017"
+                mass="0.127087" diaginertia="4.87057e-05 4.10595e-05 3.82001e-05"/>
+              <joint name="left_joint4" axis="0 0 1" range="-1.832 1.832"/>
+              <geom mesh="link4_2" material="gray_mat" class="visual"/>
+              <geom mesh="link4_3" material="darker_gray_mat" class="visual"/>
+              <geom mesh="link4_4" material="gray_mat" class="visual"/>
+              <geom mesh="link4_5" material="gray_mat" class="visual"/>
+              <geom mesh="link4_6" material="gray_mat" class="visual"/>
+              <geom mesh="link4" class="collision"/>
+              <body name="left_link5" quat="0.707105 0.707108 0 0" gravcomp="1">
+                <inertial pos="8.82262e-05 0.0566829 -0.0019612" quat="0.507447 0.490986 0.506887 0.494466"
+                  mass="0.144711" diaginertia="0.001 0.001 0.001"/>
+                <joint name="left_joint5" axis="0 0 1" range="-1.22 1.22"/>
+                <geom mesh="link5_2" material="black_mat" class="visual"/>
+                <geom mesh="link5_3" material="black_mat" class="visual"/>
+                <geom mesh="link5_4" material="darker_gray_mat" class="visual"/>
+                <geom mesh="link5_5" material="gray_mat" class="visual"/>
+                <geom mesh="link5_6" material="light_gray_mat" class="visual"/>
+                <geom mesh="link5_7" material="gray_mat" class="visual"/>
+                <geom mesh="link5_8" material="gray_mat" class="visual"/>
+                <geom mesh="link5" class="collision"/>
+                <body name="left_link6" pos="0 0.091 0.0014165" quat="0 0 -0.707105 -0.707108" gravcomp="1">
+                  <inertial pos="0.0010312 0.0121761 0.0315481" quat="0.0230402 0.707091 0.0373344 0.70576" mass="1.2"
+                    diaginertia="0.001 0.001 0.001"/>
+                  <joint name="left_joint6" axis="0 0 1" range="-3.14 3.14"/>
+                  <geom quat="0.707105 0 0 0.707108" mesh="link6" material="gray_mat" class="visual"/>
+                  <!-- 충돌: mesh 캡슐 자동피팅(r=26.4mm, 포켓 침범) 대신 mesh 실측 primitive 교체
+                       (손목 실린더 z0~0.045 / 그리퍼 베이스 블록 z0.038~0.060 / 가이드 레일 z0.060~0.067) -->
+                  <geom type="cylinder" size="0.0285 0.0225" pos="0 0 0.0225" class="collision"/>
+                  <geom type="box" size="0.0353 0.072 0.011" pos="-0.00475 0 0.049" class="collision"/>
+                  <geom type="box" size="0.010 0.0725 0.0035" pos="0 0 0.0635" class="collision"/>
+                  <site name="ee_tip_left" pos="0 0 0.12" size="0.004" rgba="0 1 0 0.8"/>
+                  <!-- ⚠️ 손목 카메라 (RealSense D405, RGB FOV 87°x58°): 장착 위치 임시값
+                       (link6 +x 측면에서 그리퍼 끝을 바라봄) — 실물 장착 정보 받으면 수정 -->
+                  <camera name="left_wrist_cam" pos="-0.055 0 0.005" quat="-0.09689 -0.700437 0.700437 0.09689" fovy="58"/>
+                  <geom name="left_d405_body" mesh="d405" pos="-0.055 0 0.005" quat="0.700437 0.09689 0.09689 0.700437" material="dark_gray_mat" class="visual"/>
+                  <geom name="left_d405_bracket" type="box" size="0.008 0.012 0.01" pos="-0.046 0 0.005" material="dark_gray_mat" class="visual"/>
+                  <body name="left_link7" pos="0 0 0.13503" quat="1.89468e-08 1.89469e-08 0.707108 0.707105" gravcomp="1">
+                    <inertial pos="-0.000277778 -0.0467673 -0.00921029" quat="0.46134 0.536174 -0.553273 0.439968"
+                      mass="0.0264823" diaginertia="0.001 0.001 0.001"/>
+                    <!-- 커스텀 그리퍼: 스트로크 60mm (손가락당 0.03, 사용자 확인 2026-07-08) -->
+                    <joint name="left_joint7" axis="0 0 -1" class="finger" range="0 0.03"/>
+                    <!-- 외형: capstone 손가락 mesh (위치 사용자 확정) -->
+                    <geom mesh="capstone_lge1_link" pos="0.008003 -0.06848 -0.029048" quat="0.5 0.500002 -0.499996 0.500002" material="gripper_black_mat" class="visual"/>
+                    <!-- 미끄럼방지 테이프 패드 (사용자 계획 반영 2026-07-09): 손가락 안쪽면에서 1.5mm 돌출,
+                         완전 닫힘 시 gap 0 (state = 물리 간격 일치). 베이스 + 블레이드 전체(손끝 y=+0.045까지) -->
+                    <geom type="box" size=".011 .0403 .0025" pos="0 0.00475 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                    <geom type="box" size=".0185 .018 .0025" pos="0 -0.054 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                  </body>
+                  <!-- left_link8: second finger — mimics left_joint7 via <equality> -->
+                  <body name="left_link8" pos="0 0 0.13503" quat="1.89468e-08 -1.89469e-08 -0.707108 0.707105" gravcomp="1">
+                    <inertial pos="0.000277817 0.0467674 -0.0092103" quat="0.553273 0.439968 -0.46134 0.536174"
+                      mass="0.0264822" diaginertia="0.001 0.001 0.001"/>
+                    <joint name="left_joint8" axis="0 0 1" class="finger" range="-0.03 0"/>
+                    <geom mesh="capstone_lge2_Link" pos="-0.008003 0.06848 -0.029048" quat="0.5 0.500002 -0.5 0.499998" material="gripper_black_mat" class="visual"/>
+                    <geom type="box" size=".011 .0403 .0025" pos="0 -0.00475 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                    <geom type="box" size=".0185 .018 .0025" pos="0 0.054 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+
+    <!-- ===== 오른팔 (piper_dual.xml 원문, 장착 pos/quat만 교체) ===== -->
+    <!-- yaw 180°: joint1 zero 방향 반대로 (사용자 확인, 2026-07-07) -->
+    <body name="right_base_link" childclass="piper" gravcomp="1" pos="-0.06 0.638 0.703" quat="0 0 0 1">
+      <inertial pos="-0.00979275 1.82906e-06 0.04101" quat="0.692988 -0.137524 -0.137826 0.69416" mass="0.162549"
+        diaginertia="0.000269445 0.000227478 0.000221437"/>
+      <geom class="visual" density="0" mesh="base_link" material="gray_mat"/>
+      <geom class="collision" mesh="base_link"/>
+      <body name="right_link1" pos="0 0 0.123" quat="0.707105 0 0 -0.707108" gravcomp="1">
+        <inertial pos="0.00131676 0.000310289 -0.00922875" quat="0.557105 0.432155 0.377373 0.600388" mass="0.097868"
+          diaginertia="9.25942e-05 8.3083e-05 7.69469e-05"/>
+        <!-- 2026-08-10 사용자 지시: 허리(joint1) ±90도로 제한 -->
+        <joint name="right_joint1" axis="0 0 1" range="-1.5708 1.5708"/>
+        <geom class="visual" density="0" mesh="link1" material="gray_mat"/>
+        <geom class="collision" mesh="link1"/>
+        <body name="right_link2" quat="0.499998 0.5 -0.500002 -0.5" gravcomp="1">
+          <inertial pos="0.148794 -0.00242027 0.00175155" quat="-0.0249063 0.70684 0.00803509 0.706889" mass="0.290889"
+            diaginertia="0.00177549 0.00173142 0.00014552"/>
+          <!-- 2026-08-10 사용자 지시: 어깨(joint2) 상한 150도로 제한 -->
+          <joint name="right_joint2" axis="0 0 1" range="0 2.61799"/>
+          <geom mesh="link2_0" material="gray_mat" class="visual"/>
+          <geom mesh="link2_1" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_2" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_3" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_4" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_5" material="red_mat" class="visual"/>
+          <geom mesh="link2_6" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_7" material="gray_mat" class="visual"/>
+          <geom mesh="link2_8" material="red_mat" class="visual"/>
+          <geom mesh="link2_9" material="red_mat" class="visual"/>
+          <geom mesh="link2_10" material="gray_mat" class="visual"/>
+          <geom mesh="link2_11" material="red_mat" class="visual"/>
+          <geom mesh="link2_12" material="red_mat" class="visual"/>
+          <geom mesh="link2_13" material="red_mat" class="visual"/>
+          <geom mesh="link2_14" material="red_mat" class="visual"/>
+          <geom mesh="link2_15" material="red_mat" class="visual"/>
+          <geom mesh="link2_16" material="red_mat" class="visual"/>
+          <geom mesh="link2_17" material="red_mat" class="visual"/>
+          <geom mesh="link2_18" material="red_mat" class="visual"/>
+          <geom mesh="link2_19" material="red_mat" class="visual"/>
+          <geom mesh="link2_20" material="red_mat" class="visual"/>
+          <geom mesh="link2_21" material="gray_mat" class="visual"/>
+          <geom mesh="link2_22" material="red_mat" class="visual"/>
+          <geom mesh="link2_23" material="red_mat" class="visual"/>
+          <geom mesh="link2_24" material="red_mat" class="visual"/>
+          <geom mesh="link2_25" material="dark_gray_mat" class="visual"/>
+          <geom mesh="link2_26" material="red_mat" class="visual"/>
+          <geom mesh="link2_27" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_28" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_29" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_30" material="darker_gray_mat" class="visual"/>
+          <geom mesh="link2_31" material="light_medium_gray_mat" class="visual"/>
+          <geom mesh="link2" class="collision"/>
+          <body name="right_link3" pos="0.28358 0.028726 0" quat="0.998726 0 0 0.0504536" gravcomp="1">
+            <inertial pos="-0.0996835 0.0349477 0.000508026" quat="0.0777021 0.702287 -0.0990541 0.700674"
+              mass="0.290848" diaginertia="0.000241946 0.000222224 0.000100384"/>
+            <joint name="right_joint3" pos="0 0 0" axis="0 0 1" range="-2.697 0"/>
+            <geom mesh="link3_0" material="darker_gray_mat" class="visual"/>
+            <geom mesh="link3_1" material="red_mat" class="visual"/>
+            <geom mesh="link3_2" material="gray_mat" class="visual"/>
+            <geom mesh="link3_3" material="gray_mat" class="visual"/>
+            <geom mesh="link3_4" material="gray_mat" class="visual"/>
+            <geom mesh="link3_5" material="gray_mat" class="visual"/>
+            <geom mesh="link3_7" material="darker_gray_mat" class="visual"/>
+            <geom mesh="link3_8" material="white_mat" class="visual"/>
+            <geom mesh="link3_9" material="red_mat" class="visual"/>
+            <geom mesh="link3_10" material="white_mat" class="visual"/>
+            <geom mesh="link3_11" material="white_mat" class="visual"/>
+            <geom mesh="link3_12" material="white_mat" class="visual"/>
+            <geom mesh="link3_13" material="white_mat" class="visual"/>
+            <geom mesh="link3_14" material="gray_mat" class="visual"/>
+            <geom mesh="link3_15" material="gray_mat" class="visual"/>
+            <geom mesh="link3_16" material="gray_mat" class="visual"/>
+            <geom mesh="link3_17" material="gray_mat" class="visual"/>
+            <geom mesh="link3_18" material="gray_mat" class="visual"/>
+            <geom mesh="link3_19" material="gray_mat" class="visual"/>
+            <geom mesh="link3_20" material="gray_mat" class="visual"/>
+            <geom mesh="link3_21" material="gray_mat" class="visual"/>
+            <geom mesh="link3_22" material="gray_mat" class="visual"/>
+            <geom mesh="link3_23" material="gray_mat" class="visual"/>
+            <geom mesh="link3_24" material="gray_mat" class="visual"/>
+            <geom mesh="link3_25" material="gray_mat" class="visual"/>
+            <geom mesh="link3_26" material="gray_mat" class="visual"/>
+            <geom mesh="link3_27" material="gray_mat" class="visual"/>
+            <geom mesh="link3_28" material="gray_mat" class="visual"/>
+            <geom mesh="link3" class="collision"/>
+            <body name="right_link4" pos="-0.24221 0.068514 0" quat="0.544767 -0.544769 -0.450809 0.450808" gravcomp="1">
+              <inertial pos="0.000276465 -0.00102804 -0.00472831" quat="0.492305 0.505285 0.503294 0.499017"
+                mass="0.127087" diaginertia="4.87057e-05 4.10595e-05 3.82001e-05"/>
+              <joint name="right_joint4" axis="0 0 1" range="-1.832 1.832"/>
+              <geom mesh="link4_2" material="gray_mat" class="visual"/>
+              <geom mesh="link4_3" material="darker_gray_mat" class="visual"/>
+              <geom mesh="link4_4" material="gray_mat" class="visual"/>
+              <geom mesh="link4_5" material="gray_mat" class="visual"/>
+              <geom mesh="link4_6" material="gray_mat" class="visual"/>
+              <geom mesh="link4" class="collision"/>
+              <body name="right_link5" quat="0.707105 0.707108 0 0" gravcomp="1">
+                <inertial pos="8.82262e-05 0.0566829 -0.0019612" quat="0.507447 0.490986 0.506887 0.494466"
+                  mass="0.144711" diaginertia="0.001 0.001 0.001"/>
+                <joint name="right_joint5" axis="0 0 1" range="-1.22 1.22"/>
+                <geom mesh="link5_2" material="black_mat" class="visual"/>
+                <geom mesh="link5_3" material="black_mat" class="visual"/>
+                <geom mesh="link5_4" material="darker_gray_mat" class="visual"/>
+                <geom mesh="link5_5" material="gray_mat" class="visual"/>
+                <geom mesh="link5_6" material="light_gray_mat" class="visual"/>
+                <geom mesh="link5_7" material="gray_mat" class="visual"/>
+                <geom mesh="link5_8" material="gray_mat" class="visual"/>
+                <geom mesh="link5" class="collision"/>
+                <body name="right_link6" pos="0 0.091 0.0014165" quat="0 0 -0.707105 -0.707108" gravcomp="1">
+                  <inertial pos="0.0010312 0.0121761 0.0315481" quat="0.0230402 0.707091 0.0373344 0.70576" mass="1.2"
+                    diaginertia="0.001 0.001 0.001"/>
+                  <joint name="right_joint6" axis="0 0 1" range="-3.14 3.14"/>
+                  <geom quat="0.707105 0 0 0.707108" mesh="link6" material="gray_mat" class="visual"/>
+                  <!-- 충돌: mesh 캡슐 자동피팅(r=26.4mm, 포켓 침범) 대신 mesh 실측 primitive 교체
+                       (손목 실린더 z0~0.045 / 그리퍼 베이스 블록 z0.038~0.060 / 가이드 레일 z0.060~0.067) -->
+                  <geom type="cylinder" size="0.0285 0.0225" pos="0 0 0.0225" class="collision"/>
+                  <geom type="box" size="0.0353 0.072 0.011" pos="-0.00475 0 0.049" class="collision"/>
+                  <geom type="box" size="0.010 0.0725 0.0035" pos="0 0 0.0635" class="collision"/>
+                  <site name="ee_tip_right" pos="0 0 0.12" size="0.004" rgba="0 1 0 0.8"/>
+                  <!-- ⚠️ 손목 카메라 (D405): 임시 장착 — 왼쪽과 동일 규칙 -->
+                  <camera name="right_wrist_cam" pos="-0.055 0 0.005" quat="-0.09689 -0.700437 0.700437 0.09689" fovy="58"/>
+                  <geom name="right_d405_body" mesh="d405" pos="-0.055 0 0.005" quat="0.700437 0.09689 0.09689 0.700437" material="dark_gray_mat" class="visual"/>
+                  <geom name="right_d405_bracket" type="box" size="0.008 0.012 0.01" pos="-0.046 0 0.005" material="dark_gray_mat" class="visual"/>
+                  <body name="right_link7" pos="0 0 0.13503" quat="1.89468e-08 1.89469e-08 0.707108 0.707105" gravcomp="1">
+                    <inertial pos="-0.000277778 -0.0467673 -0.00921029" quat="0.46134 0.536174 -0.553273 0.439968"
+                      mass="0.0264823" diaginertia="0.001 0.001 0.001"/>
+                    <joint name="right_joint7" axis="0 0 -1" class="finger" range="0 0.03"/>
+                    <geom mesh="capstone_rge1_link" pos="0.008003 -0.06848 -0.029048" quat="0.5 0.500002 -0.499996 0.500002" material="gripper_black_mat" class="visual"/>
+                    <geom type="box" size=".011 .0403 .0025" pos="0 0.00475 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                    <geom type="box" size=".0185 .018 .0025" pos="0 -0.054 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                  </body>
+                  <!-- right_link8: second finger — mimics right_joint7 via <equality> -->
+                  <body name="right_link8" pos="0 0 0.13503" quat="1.89468e-08 -1.89469e-08 -0.707108 0.707105" gravcomp="1">
+                    <inertial pos="0.000277817 0.0467674 -0.0092103" quat="0.553273 0.439968 -0.46134 0.536174"
+                      mass="0.0264822" diaginertia="0.001 0.001 0.001"/>
+                    <joint name="right_joint8" axis="0 0 1" class="finger" range="-0.03 0"/>
+                    <geom mesh="capstone_rge2_link" pos="-0.008003 0.06848 -0.029048" quat="0.5 0.500002 -0.5 0.499998" material="gripper_black_mat" class="visual"/>
+                    <geom type="box" size=".011 .0403 .0025" pos="0 -0.00475 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                    <geom type="box" size=".0185 .018 .0025" pos="0 0.054 -0.0025" rgba="0.08 0.08 0.08 1" class="collision" group="0"
+                          condim="6" friction="2.5 0.03 0.002" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <!-- ===== 장바구니 + 상품 (바구니에서 꺼내 바코드 스캔하는 과제용) =====
+         바구니 실측(사용자): 상단 405x260, 하단 325x195, 높이 215mm. 벽 두께 3mm는 근사값.
+         상품 바코드 = 실제 EAN-13 번호로 생성한 텍스처.
+         스팸(200g)/후라보노: 치수 확인 대기 — 바코드 텍스처만 생성해 둠. -->
+    <!-- 바구니: 왼팔 옆 낮은 선반(z=0.540) 위 (사용자 지정). 실물이 홈에 끼워져 고정된 상태라
+         freejoint 없이 월드 고정 — 상품 낙하 충격에 넘어지는 문제 방지 (2026-07-08) -->
+    <body name="basket" pos="-0.355 -0.155 0.541">
+      <!-- 바닥은 낙하 관통(tunneling) 방지를 위해 두께 8mm -->
+      <geom name="basket_bottom"  type="box" size="0.1625 0.0975 0.004" pos="0 0 0.004" material="basket_mat" density="700"/>
+      <geom name="basket_wall_xp" type="box" size="0.0015 0.114 0.1094" pos="0.1825 0 0.1075"  axisangle="0 1 0 0.184"  material="basket_mat" density="700"/>
+      <geom name="basket_wall_xn" type="box" size="0.0015 0.114 0.1094" pos="-0.1825 0 0.1075" axisangle="0 1 0 -0.184" material="basket_mat" density="700"/>
+      <geom name="basket_wall_yp" type="box" size="0.18 0.0015 0.1087" pos="0 0.11375 0.1075"  axisangle="1 0 0 -0.15"  material="basket_mat" density="700"/>
+      <geom name="basket_wall_yn" type="box" size="0.18 0.0015 0.1087" pos="0 -0.11375 0.1075" axisangle="1 0 0 0.15"   material="basket_mat" density="700"/>
+    </body>
+    <!-- 2026-08-10: spam 제외 나머지 4개 상품 임시 비활성화 (나중에 다시 켤 예정 - 완전 삭제 아님)
+    아카페라 스페셜티 예가체프 460ml: Ø75 x 160mm (사용자 실측)
+    <body name="acafela" pos="-0.455 -0.20 0.625">
+      <freejoint name="acafela_free"/>
+      지름 Ø75→Ø55 축소 (사용자 지시 2026-07-09: 그리퍼 최대 벌림 60mm로 파지 가능하게)
+      <geom name="acafela_body" type="cylinder" size="0.0275 0.08" density="707" rgba="0.55 0.36 0.2 1"/>
+      <geom name="acafela_barcode" type="box" size="0.01 0.015 0.0002" pos="0.0277 0 -0.03" axisangle="0 1 0 1.5708" material="barcode_acafela_mat" contype="0" conaffinity="0"/>
+    </body>
+    핫식스 더 킹 355ml: 표준 355ml 캔 규격 Ø66 x 122mm 근사
+    <body name="hotsix" pos="-0.455 -0.11 0.606">
+      <freejoint name="hotsix_free"/>
+      지름 Ø66→Ø55 축소 (사용자 지시 2026-07-09: 그리퍼 최대 벌림 60mm로 파지 가능하게)
+      <geom name="hotsix_body" type="cylinder" size="0.0275 0.061" density="887" rgba="0.15 0.12 0.1 1"/>
+      <geom name="hotsix_barcode" type="box" size="0.01 0.015 0.0002" pos="0.0277 0 -0.02" axisangle="0 1 0 1.5708" material="barcode_hotsix_mat" contype="0" conaffinity="0"/>
+    </body>
+    달콤맛밤 달밤 40g: 50 x 200mm 파우치 (사용자: 크기 불확실), 두께 15mm 근사 → 눕힌 상태
+    <body name="dalbam" pos="-0.315 -0.10 0.552">
+      <freejoint name="dalbam_free"/>
+      <geom name="dalbam_body" type="box" size="0.1 0.025 0.0075" density="600" rgba="0.72 0.55 0.35 1"/>
+      <geom name="dalbam_barcode" type="box" size="0.015 0.01 0.0002" pos="0.05 0 0.0077" material="barcode_dalbam_mat" contype="0" conaffinity="0"/>
+    </body>
+    후라보노 26g 스틱형: 74 x 22 x 14mm (사용자 제공 중간값). 스팸 위에 올려 배치
+    <body name="flavono" pos="-0.285 -0.205 0.602">
+      <freejoint name="flavono_free"/>
+      <geom name="flavono_body" type="box" size="0.037 0.011 0.007" density="1300" rgba="0.35 0.75 0.4 1"/>
+      <geom name="flavono_barcode" type="box" size="0.012 0.008 0.0002" pos="0 0 0.0072" material="barcode_flavono_mat" contype="0" conaffinity="0"/>
+    </body>
+    -->
+    <!-- 스팸 200g: 실측 100 x 55 x 47.5mm(사용자 제공)에서 1차 85% 축소(85x46.8x40.4mm) 후,
+         2026-08-10 사용자 지시로 길이/폭만 추가 축소(높이 40.4mm는 유지) → 68 x 37.4 x 40.4mm.
+         둥근 캔 → box 근사 -->
+    <body name="spam" pos="-0.285 -0.205 0.5654">
+      <freejoint name="spam_free"/>
+      <geom name="spam_body" type="box" size="0.0340 0.0187 0.0202" density="880" rgba="0.2 0.3 0.65 1"/>
+      <geom name="spam_barcode" type="box" size="0.015 0.01 0.0002" pos="0 -0.0189 0" axisangle="1 0 0 1.5708" material="barcode_spam_mat" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+
+  <contact>
+    <exclude body1="left_base_link"  body2="left_link1"/>
+    <exclude body1="right_base_link" body2="right_link1"/>
+    <!-- 팔 base가 아크릴 작업면 높이(z 0.703~0.826)에 걸쳐 있어 상시 접촉 제외 -->
+    <exclude body1="base_link" body2="left_base_link"/>
+    <exclude body1="base_link" body2="right_base_link"/>
+  </contact>
+
+  <equality>
+    <!-- 실물 그리퍼는 기어 강결합 — 커플링을 거의 강체로 (기본 soft 제약이면 접촉 시
+         수동 손가락이 밀려 비대칭 파지/비틀림 이탈 발생) -->
+    <joint joint1="left_joint8"  joint2="left_joint7"  polycoef="0 -1 0 0 0" solref="0.002 1" solimp="0.99 0.999 0.0001"/>
+    <joint joint1="right_joint8" joint2="right_joint7" polycoef="0 -1 0 0 0" solref="0.002 1" solimp="0.99 0.999 0.0001"/>
+  </equality>
+
+  <actuator>
+    <position name="left_joint1"  joint="left_joint1"  class="piper"  kp="80" kv="5"/>
+    <position name="left_joint2"  joint="left_joint2"  class="piper"  kp="80" kv="5"/>
+    <position name="left_joint3"  joint="left_joint3"  class="piper"  kp="80" kv="5"/>
+    <position name="left_joint4"  joint="left_joint4"  class="piper"  kp="40" kv="5"/>
+    <position name="left_joint5"  joint="left_joint5"  class="piper"  kp="10" kv="1.5"/>
+    <position name="left_joint6"  joint="left_joint6"  class="piper"  kp="10" kv="1.5"/>
+    <!-- 그리퍼: kp 400 → 닫힘 오차 25mm 이상에서 forcerange 10N 포화 (견고한 파지력) -->
+    <position name="left_gripper" joint="left_joint7"  class="finger" kp="400" kv="40"/>
+    <position name="right_joint1" joint="right_joint1" class="piper"  kp="80" kv="5"/>
+    <position name="right_joint2" joint="right_joint2" class="piper"  kp="80" kv="5"/>
+    <position name="right_joint3" joint="right_joint3" class="piper"  kp="80" kv="5"/>
+    <position name="right_joint4" joint="right_joint4" class="piper"  kp="40" kv="5"/>
+    <position name="right_joint5" joint="right_joint5" class="piper"  kp="10" kv="1.5"/>
+    <position name="right_joint6" joint="right_joint6" class="piper"  kp="10" kv="1.5"/>
+    <position name="right_gripper" joint="right_joint7" class="finger" kp="400" kv="40"/>
+    <!-- 목: 떨림 방지를 위해 kv 추가(임시 튜닝값). 실물 규약 확인 후 재조정 -->
+    <position name="h1_joint_pos" joint="h1_joint" kp="20" kv="1" ctrlrange="-1.5708 1.5708"/>
+    <position name="h2_joint_pos" joint="h2_joint" kp="20" kv="1" ctrlrange="-1.5708 1.5708"/>
+  </actuator>
+
+  <keyframe>
+    <!-- qpos 25 = 목(2) + 왼팔(8) + 오른팔(8) + 상품 free 1개(spam, 7: pos+quat). 바구니는 고정.
+         2026-08-10: acafela/hotsix/dalbam/flavono는 MJCF에서 임시 비활성화(주석)됨 -
+         나중에 다시 켤 때 qpos에 각 7개(pos+quat)씩 원래 순서대로 복원할 것.
+         ctrl 16 = 팔 14 + 목 2.
+         팔 초기자세 = 실물 파이프라인의 task-ready 자세 (piper_robot.py EVAL_INIT_JOINT_DEG
+         [-0.20, 35.31, -57.85, -0.36, 60.46, 0.74]° -> rad) + 그리퍼 열림(0.03). -->
+    <key name="home"
+         qpos="0 0
+               -0.00349 0.61628 -1.00967 -0.00628 1.05523 0.01292 0.03 -0.03
+               -0.00349 0.61628 -1.00967 -0.00628 1.05523 0.01292 0.03 -0.03
+               -0.285 -0.205 0.5654 1 0 0 0"
+         ctrl="-0.00349 0.61628 -1.00967 -0.00628 1.05523 0.01292 0.03
+               -0.00349 0.61628 -1.00967 -0.00628 1.05523 0.01292 0.03
+               0 0"/>
+  </keyframe>
+</mujoco>
