@@ -166,6 +166,12 @@
     <light name="worklight" pos="-0.35 0.39 2" dir="0 0 -1" directional="true" diffuse="0.28 0.28 0.28" castshadow="false"/>
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
 
+    <!-- 배경 흰 벽: 작업대 먼 쪽 가장자리(x=-0.63) 너머에 세워서, head_cam/top_cam이
+         책상 너머를 볼 때 체커보드 바닥 대신 흰 배경이 찍히게 함 (2026-08-10 사용자 지시).
+         비충돌(contype/conaffinity=0) 순수 시각 요소. -->
+    <geom name="backdrop_wall" type="box" size="0.02 1.5 1.25" pos="-0.85 0.55 1.25"
+          material="white_mat" contype="0" conaffinity="0" group="2"/>
+
     <!-- ===== capstone 프레임 (urdf_v8_mujoco.xml 실측값 그대로, visual 전용) ===== -->
     <body name="base_link" pos="0 0 0">
       <inertial pos="-0.30076808 0.3901163 0.53460902" mass="12.662677" fullinertia="0.34221346 0.23707595 0.35796367 -1.8095931e-07 -1.5824002e-05 -1.8939502e-08"/>

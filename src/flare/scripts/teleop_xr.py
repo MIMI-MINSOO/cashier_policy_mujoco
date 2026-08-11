@@ -88,6 +88,10 @@ def teleop_loop(
             if reset_btn and not reset_btn_prev:
                 logger.info("Reset button pressed - resetting scene.")
                 robot.reset_scene()
+                # 씬(로봇 qpos 포함)은 리셋됐는데 텔레옵의 목 트래킹 상태는 그대로라,
+                # 안 하면 다음 프레임에 바로 리셋 전 각도로 되돌아간다.
+                if hasattr(teleop, "reset_neck"):
+                    teleop.reset_neck()
             reset_btn_prev = reset_btn
 
         teleop_action = teleop_action_processor((raw_action, obs))
