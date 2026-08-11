@@ -426,6 +426,16 @@ class BiPiperXRTeleop(Teleoperator):
             
         return action
 
+    def reset_neck(self) -> None:
+        """목 트래킹 상태를 home으로 강제 리셋 (씬 리셋 시 호출용).
+
+        씬 리셋(예: teleop_xr.py의 B버튼)은 robot.env만 리셋하고 이 텔레옵의
+        neck_mapper 내부 상태(current_pitch/yaw)는 안 건드리기 때문에, 안 하면
+        리셋 다음 프레임에 바로 리셋 전 각도로 되돌아가버린다.
+        """
+        if self.neck_mapper is not None:
+            self.neck_mapper.reset()
+
     def send_feedback(self, feedback: dict[str, float]) -> None:
         """
         Receives the actual physical state of the robot from LeRobot's main loop

@@ -104,6 +104,17 @@ class NeckAngleMapper:
     def disengage(self):
         self.neutral_rot = None
 
+    def reset(self):
+        """Force target back to home instantly (외부 씬 리셋 등에서 호출).
+
+        neutral_rot도 같이 지워서, 클러치가 켜진 채로 리셋되어도 다음 step()이
+        engage()를 다시 호출해 지금(=home) 기준으로 재결속한다 - 그래서 클러치를
+        다시 안 눌러도 튀지 않고 home에서부터 자연스럽게 이어서 추적된다."""
+        self.current_pitch = self.config.home_pitch_rad
+        self.current_yaw = self.config.home_yaw_rad
+        self.neutral_rot = None
+        self._invalid_count = 0
+
     def home(self):
         """Head tracking is OFF: smoothly drive the neck back to its home pose."""
         self.neutral_rot = None

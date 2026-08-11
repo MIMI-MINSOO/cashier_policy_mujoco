@@ -530,6 +530,10 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
                 # 심 로봇: 에피소드 시작 전 씬 리셋 (home 자세 + 상품 랜덤 재배치)
                 if hasattr(robot, "reset_scene"):
                     robot.reset_scene()
+                    # 씬(로봇 qpos 포함)은 리셋됐는데 텔레옵의 목 트래킹 상태(neck_mapper)는
+                    # 그대로라, 안 하면 에피소드 첫 프레임부터 목이 리셋 전 각도로 튄다.
+                    if hasattr(teleop, "reset_neck"):
+                        teleop.reset_neck()
 
                 # Move robot to teleop init pose before recording (VR teleop only)
                 teleop_name = str(getattr(teleop, 'name', ''))
