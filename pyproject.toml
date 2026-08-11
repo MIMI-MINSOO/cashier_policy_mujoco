@@ -49,8 +49,12 @@ teleop = [
     "placo>=0.6",
     "meshcat>=0.3",
 ]
+yolo = [
+    "ultralytics>=8.3.0",
+    "opencv-python>=4.13.0.92",
+]
 all = [
-    "flare[train,eval,sim,teleop]",
+    "flare[train,eval,sim,teleop,yolo]",
 ]
 
 [tool.setuptools.packages.find]

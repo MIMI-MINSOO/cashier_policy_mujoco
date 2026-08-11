@@ -133,6 +133,8 @@ from lerobot.utils.utils import (
 )
 from lerobot.utils.visualization_utils import init_rerun, log_rerun_data
 
+from flare.utils.barcode_yolo import DEFAULT_YOLO_MODEL_PATH, BarcodeDetector
+
 
 @dataclass
 class DatasetRecordConfig:
@@ -211,6 +213,15 @@ class RecordConfig:
     play_sounds: bool = True
     # Resume recording on an existing dataset.
     resume: bool = False
+    # Run real-time YOLO barcode detection on camera frames while recording, and log
+    # per-camera detection status to the console (does not affect the saved dataset).
+    yolo: bool = False
+    # Path to the YOLO barcode-detection weights (.pt) used when --yolo=true.
+    yolo_model_path: str = DEFAULT_YOLO_MODEL_PATH
+    # YOLO confidence threshold.
+    yolo_conf: float = 0.4
+    # Camera obs keys to run YOLO on when --yolo=true. None = all camera keys in the observation.
+    yolo_camera_keys: list[str] | None = None
 
     def __post_init__(self):
         # HACK: We parse again the cli args here to get the pretrained path if there was one.
@@ -284,6 +295,7 @@ def record_loop(
     single_task: str | None = None,
     display_data: bool = False,
     display_compressed_images: bool = False,
+    yolo_detector: BarcodeDetector | None = None,
 ):
     if dataset is not None and dataset.fps != fps:
         raise ValueError(f"The dataset fps should be equal to requested fps ({dataset.fps} != {fps}).")
@@ -301,6 +313,7 @@ def record_loop(
     start_episode_t = time.perf_counter()
     rerun_times_ms: list[float] = []
     last_rerun_report_t = time.perf_counter()
+    yolo_last_state: dict[str, bool] = {}
     while timestamp < control_time_s:
         start_loop_t = time.perf_counter()
 
@@ -310,6 +323,21 @@ def record_loop(
 
         # Get robot observation
         obs = robot.get_observation()
+
+        # Real-time YOLO barcode detection (opt-in via --yolo=true). Only logs to the
+        # console when a camera's detection state flips, so it stays readable at 30 Hz.
+        if yolo_detector is not None:
+            barcode_detections = yolo_detector.detect(obs)
+            detected_keys = {d.camera_key for d in barcode_detections}
+            for key in yolo_detector.image_keys(obs):
+                detected = key in detected_keys
+                if yolo_last_state.get(key) != detected:
+                    yolo_last_state[key] = detected
+                    if detected:
+                        conf = max(d.confidence for d in barcode_detections if d.camera_key == key)
+                        logging.info(f"[YOLO] {key}: 바코드 검출 시작 (conf={conf:.2f})")
+                    else:
+                        logging.info(f"[YOLO] {key}: 바코드 검출 종료")
 
         # Applies a pipeline to the raw robot observation, default is IdentityProcessor
         obs_processed = robot_observation_processor(obs)
@@ -435,6 +463,13 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
         if (cfg.display_data and cfg.display_ip is not None and cfg.display_port is not None)
         else cfg.display_compressed_images
     )
+
+    yolo_detector = None
+    if cfg.yolo:
+        yolo_detector = BarcodeDetector(
+            model_path=cfg.yolo_model_path, conf=cfg.yolo_conf, camera_keys=cfg.yolo_camera_keys
+        )
+        logging.info(f"[YOLO] barcode detector loaded: {cfg.yolo_model_path} (conf={cfg.yolo_conf})")
 
     robot = make_robot_from_config(cfg.robot)
     teleop = make_teleoperator_from_config(cfg.teleop) if cfg.teleop is not None else None
@@ -564,6 +599,7 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
                     single_task=cfg.dataset.single_task,
                     display_data=cfg.display_data,
                     display_compressed_images=display_compressed_images,
+                    yolo_detector=yolo_detector,
                 )
 
                 # Execute a few seconds without recording to give time to manually reset the environment
