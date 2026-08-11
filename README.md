@@ -48,6 +48,17 @@ python -m flare.scripts.record \
 # 에피소드 제어: 오른쪽 스틱 우/좌 = 저장+다음/재녹화, 왼쪽 Y버튼 = 전체 종료
 # (키보드도 병행 지원: → 저장, ← 재녹화, ESC 중단)
 
+# 데이터 수집 중 실시간 YOLO 바코드 검출 (--yolo=true 한 줄로 켜고 끔)
+# 최초 1회: pip install -e ".[sim,teleop,yolo]"
+python -m flare.scripts.record \
+  --robot.type=bi_piper_mujoco --teleop.type=bi_piper_xr_mujoco \
+  --dataset.repo_id=<username>/<dataset-name> --dataset.fps=30 \
+  --dataset.num_episodes=<N> --dataset.single_task="<설명>" --dataset.push_to_hub=true \
+  --yolo=true
+# 카메라별 바코드 검출 시작/종료를 콘솔에 로그로 찍음 (녹화되는 데이터셋 자체는 안 바뀜)
+# 가중치: src/flare/assets/yolo/barcode_v6.pt (BarcodeDetection 리포 v6, 기본값)
+# --yolo_conf=0.4(기본) / --yolo_model_path=<경로> / --yolo_camera_keys='["head","left_wrist","right_wrist"]'로 조정 가능
+
 # 변환 (LeRobot → Zarr)
 python -m flare.scripts.convert --local-dir <경로> --target-fps 10 -o <출력경로>
 
